@@ -1,3 +1,4 @@
+//EXP 1
 public class merge {
     public static void conquere(int a[],int s,int e,int mid ){
         int merged[] = new int[e-s+1];
