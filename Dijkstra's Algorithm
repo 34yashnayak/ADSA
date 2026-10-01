@@ -1,0 +1,55 @@
+import java.util.Arrays;
+
+public class DijkstraAlgorithm {
+    public static int[] dijkstra(int[][] graph, int source, int n) {
+        int[] distance = new int[n];
+        boolean[] visited = new boolean[n];
+        int INF = Integer.MAX_VALUE;
+        for (int i = 0; i < n; i++) {
+            distance[i] = INF;
+            visited[i] = false;
+        }
+        distance[source] = 0;
+        for (int count = 0; count < n; count++) {
+            int u = -1;
+            int minDist = INF;
+            for (int i = 0; i < n; i++) {
+                if (!visited[i] && distance[i] < minDist) {
+                    minDist = distance[i];
+                    u = i;
+                }
+            }
+            if (u == -1 || minDist == INF) {
+                break;
+            }
+            visited[u] = true;
+            for (int v = 0; v < n; v++) {
+                if (!visited[v] && graph[u][v] != 0 && distance[u] != INF 
+                        && distance[u] + graph[u][v] < distance[v]) {
+                    distance[v] = distance[u] + graph[u][v];
+                }
+            }
+        }
+
+        return distance;
+    }
+
+    public static void main(String[] args) {
+        int n = 5;
+        int[][] graph = {
+            {0, 2, 0, 6, 0},
+            {2, 0, 3, 8, 5},
+            {0, 3, 0, 0, 7},
+            {6, 8, 0, 0, 9},
+            {0, 5, 7, 9, 0}
+        };
+
+        int source = 0;
+        int[] distances = dijkstra(graph, source, n);
+
+        System.out.println("Vertex \t Distance from Source (" + source + ")");
+        for (int i = 0; i < n; i++) {
+            System.out.println(i + " \t\t " + distances[i]);
+        }
+    }
+}
